@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  redirecter:
+    build:
+      context: .
+      target: fastapi
+    restart: always
+    command: uvicorn app.main:app --host 0.0.0.0 --reload --port 8080
+    environment:
+      DEBUG: 1
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/code/app
+      - ./redirects.json:/code/redirects.json
+
+      #redis:
+      #image: docker.io/redis
+      #restart: always
